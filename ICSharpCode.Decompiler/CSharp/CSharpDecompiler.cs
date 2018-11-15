@@ -927,32 +927,32 @@ namespace ICSharpCode.Decompiler.CSharp
 				// e.g. DelegateDeclaration
 				return entityDecl;
 			}
-			foreach (var type in typeDef.NestedTypes) {
+			foreach (var type in typeDef.NestedTypes.OrderBy(a => a.Name)) {
 				if (!type.MetadataToken.IsNil && !MemberIsHidden(module.PEFile, type.MetadataToken, settings)) {
 					var nestedType = DoDecompile(type, decompileRun, decompilationContext.WithCurrentTypeDefinition(type));
 					SetNewModifier(nestedType);
 					typeDecl.Members.Add(nestedType);
 				}
 			}
-			foreach (var field in typeDef.Fields) {
+			foreach (var field in typeDef.Fields.OrderBy(a => a.Name)) {
 				if (!field.MetadataToken.IsNil && !MemberIsHidden(module.PEFile, field.MetadataToken, settings)) {
 					var memberDecl = DoDecompile(field, decompileRun, decompilationContext.WithCurrentMember(field));
 					typeDecl.Members.Add(memberDecl);
 				}
 			}
-			foreach (var property in typeDef.Properties) {
+			foreach (var property in typeDef.Properties.OrderBy(a => a.Name)) {
 				if (!property.MetadataToken.IsNil && !MemberIsHidden(module.PEFile, property.MetadataToken, settings)) {
 					var propDecl = DoDecompile(property, decompileRun, decompilationContext.WithCurrentMember(property));
 					typeDecl.Members.Add(propDecl);
 				}
 			}
-			foreach (var @event in typeDef.Events) {
+			foreach (var @event in typeDef.Events.OrderBy(a => a.Name)) {
 				if (!@event.MetadataToken.IsNil && !MemberIsHidden(module.PEFile, @event.MetadataToken, settings)) {
 					var eventDecl = DoDecompile(@event, decompileRun, decompilationContext.WithCurrentMember(@event));
 					typeDecl.Members.Add(eventDecl);
 				}
 			}
-			foreach (var method in typeDef.Methods) {
+			foreach (var method in typeDef.Methods.OrderBy(a => a.Name)) {
 				if (!method.MetadataToken.IsNil && !MemberIsHidden(module.PEFile, method.MetadataToken, settings)) {
 					var memberDecl = DoDecompile(method, decompileRun, decompilationContext.WithCurrentMember(method));
 					typeDecl.Members.Add(memberDecl);
